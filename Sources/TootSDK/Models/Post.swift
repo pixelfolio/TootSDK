@@ -8,7 +8,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public init(
         id: String,
         uri: String,
-        createdAt: Date,
+        createdAt: Date? = nil,
         account: Account,
         content: String? = nil,
         visibility: Post.Visibility,
@@ -82,7 +82,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     /// URI of the post used for federation.
     public var uri: String
     /// The date when this post was created.
-    public var createdAt: Date
+    public var createdAt: Date?
     /// The account that authored this post.
     public var account: Account
     /// HTML-encoded post content.

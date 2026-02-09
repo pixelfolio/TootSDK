@@ -9,6 +9,43 @@ import Foundation
 
 extension TootClient {
 
+    // MARK: - Grouped Notifications (v2 API)
+
+    /// Get grouped notifications using Mastodon v2 API
+    ///  - Parameters:
+    ///     - params: Notification filtering parameters
+    ///     - pageInfo: Pagination info
+    ///     - limit: Maximum number of results to return
+    public func getGroupedNotifications(params: TootNotificationParams = .init(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws
+        -> GroupedNotificationResults
+    {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v2", "notifications"])
+            $0.method = .get
+            $0.query = createQuery(from: params) + getQueryParams(pageInfo, limit: limit)
+        }
+
+        return try await fetch(GroupedNotificationResults.self, req)
+    }
+
+    /// Get a single grouped notification by ID using Mastodon v2 API
+    ///  - Parameters:
+    ///     - params: Notification filtering parameters
+    ///     - id: The notification group ID
+    public func getSingleGroupedNotification(params: TootNotificationParams = .init(), id: String) async throws
+        -> GroupedNotificationResults
+    {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v2", "notifications", id])
+            $0.method = .get
+            $0.query = createQuery(from: params)
+        }
+
+        return try await fetch(GroupedNotificationResults.self, req)
+    }
+
+    // MARK: - Standard Notifications (v1 API)
+
     /// Get all notifications concerning the user
     ///  - Parameters:
     ///     -  limit: Maximum number of results to return. Defaults to 15 notifications. Max 30 notifications.

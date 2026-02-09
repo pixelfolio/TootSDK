@@ -8,7 +8,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
         id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
         avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil,
-        indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
+        indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date? = nil,
         lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
         suspended: Bool? = nil,
         limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, group: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
@@ -112,7 +112,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     /// Whether public posts should be searchable to anyone.
     public let indexable: Bool?
     /// When the account was created
-    public let createdAt: Date
+    public let createdAt: Date?
     /// When the most recent post was posted
     public let lastPostAt: Date?
     /// How many posts are attached to this account.
