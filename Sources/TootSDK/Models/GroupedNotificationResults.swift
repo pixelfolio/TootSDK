@@ -13,6 +13,12 @@ public struct GroupedNotificationResults: Codable, Hashable, Sendable {
     public var statuses: [Post]
     public var notificationGroups: [NotificationGroup]
 
+    public init(accounts: [Account], statuses: [Post], notificationGroups: [NotificationGroup]) {
+        self.accounts = accounts
+        self.statuses = statuses
+        self.notificationGroups = notificationGroups
+    }
+
     enum CodingKeys: String, CodingKey {
         case accounts
         case statuses
