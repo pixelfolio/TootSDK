@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - OpenEnum Equality with Wrapped
 
-extension OpenEnum where Wrapped: Equatable {
+extension OpenEnum where Wrapped: Equatable, Wrapped.RawValue: Equatable {
     /// Allows comparing OpenEnum directly with a wrapped value
     public static func == (lhs: OpenEnum<Wrapped>, rhs: Wrapped) -> Bool {
         return lhs.value == rhs
@@ -31,21 +31,29 @@ extension OpenEnum where Wrapped: Equatable {
 
 // MARK: - Optional OpenEnum Equality with Wrapped
 
-extension Optional where Wrapped: Equatable {
+extension Optional {
     /// Allows comparing Optional<OpenEnum<T>> with T directly
-    public static func == <T>(lhs: OpenEnum<T>?, rhs: T) -> Bool where Wrapped == OpenEnum<T>, T: Equatable {
+    public static func == <T: RawRepresentable & Sendable & Equatable>(lhs: OpenEnum<T>?, rhs: T) -> Bool
+        where Wrapped == OpenEnum<T>, T.RawValue: Sendable & Equatable
+    {
         return lhs?.value == rhs
     }
 
-    public static func == <T>(lhs: T, rhs: OpenEnum<T>?) -> Bool where Wrapped == OpenEnum<T>, T: Equatable {
+    public static func == <T: RawRepresentable & Sendable & Equatable>(lhs: T, rhs: OpenEnum<T>?) -> Bool
+        where Wrapped == OpenEnum<T>, T.RawValue: Sendable & Equatable
+    {
         return lhs == rhs?.value
     }
 
-    public static func != <T>(lhs: OpenEnum<T>?, rhs: T) -> Bool where Wrapped == OpenEnum<T>, T: Equatable {
+    public static func != <T: RawRepresentable & Sendable & Equatable>(lhs: OpenEnum<T>?, rhs: T) -> Bool
+        where Wrapped == OpenEnum<T>, T.RawValue: Sendable & Equatable
+    {
         return lhs?.value != rhs
     }
 
-    public static func != <T>(lhs: T, rhs: OpenEnum<T>?) -> Bool where Wrapped == OpenEnum<T>, T: Equatable {
+    public static func != <T: RawRepresentable & Sendable & Equatable>(lhs: T, rhs: OpenEnum<T>?) -> Bool
+        where Wrapped == OpenEnum<T>, T.RawValue: Sendable & Equatable
+    {
         return lhs != rhs?.value
     }
 }
